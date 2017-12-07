@@ -3,8 +3,8 @@ let stocks  = require('../db/stocks');
 
 
 exports.getStocks = (req, res) => {
-  res.json(stocks);
-}
+  res.status(200).json(stocks);
+};
 
 
 exports.purchaseStock = (req, res) => {
@@ -12,7 +12,6 @@ exports.purchaseStock = (req, res) => {
   let shares = req.body.shares;
   const cost = req.body.costPerShare;
   const totalCost = cost * shares;
-  const balance = account.balance;
 
   // check to make sure you can afford the purchase
   if (totalCost > account.balance) {
@@ -30,10 +29,10 @@ exports.purchaseStock = (req, res) => {
   // add purchased stocks
   stocks[stock] = {
     "shares": shares
-  }
+  };
 
   res.send(shares + ' of ' + stock + ' purchased for $' + totalCost);
-}
+};
 
 
 exports.sellStock = (req, res) => {
@@ -55,11 +54,11 @@ exports.sellStock = (req, res) => {
   // deduct shares from stocks
   stocks[stock] = {
     "shares": stocks[stock].shares -= shares
-  }
+  };
 
   // add funds to account
   account.balance += totalValue;
 
   res.send(shares + ' of ' + stock + ' sold for $' + totalValue);
 
-}
+};

@@ -1,15 +1,22 @@
 // Mock Data
 
-const stocks = {
-  "AAPL": {
+const stocks = [
+  {
+    "symbol" : "AAPL",
+    "shares" : 1000
+  },
+  {
+    "symbol": "GOOGL",
     "shares": 1000
   },
-  "GOOGL": {
-    "shares": 2000
+  {
+    "symbol": "MSFT",
+    "shares": 1000
   },
-  "MSFT": {
-    "shares": 3000
+  {
+    "symbol": "SNAP",
+    "shares": 1000
   }
-};
+];
 
 module.exports = stocks;
