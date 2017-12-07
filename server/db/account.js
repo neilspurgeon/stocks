@@ -1,3 +1,5 @@
+// Mock Data
+
 const account = {
   "balance": 5132.00
 };

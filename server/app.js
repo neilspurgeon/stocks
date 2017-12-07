@@ -8,7 +8,7 @@ const app = express();
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
-// parse application/json
+// Parse JSON
 app.use(bodyParser.json());
 
 // Routes
