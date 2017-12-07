@@ -101,7 +101,7 @@ class Card extends React.Component {
         <div className="bottom-actions">
 
           <button
-            className="purchase-btn card-btn"
+            className="buy-btn card-btn"
             onClick={this.handleOpenBuyModal}
           >
             BUY
@@ -129,6 +129,12 @@ class Card extends React.Component {
             onChange={this.handleTransactionAmount}
           />
 
+          <span
+            className="cancel-btn"
+            onClick={this.handleCloseBuyModal}>
+            Cancel
+          </span>
+
           <button className="confirm-btn card-btn">
             Confirm Purchase
           </button>
@@ -145,6 +151,12 @@ class Card extends React.Component {
             value={this.state.transationAmount}
             onChange={this.handleTransactionAmount}
           />
+
+        <span
+          className="cancel-btn"
+          onClick={this.handleCloseSellModal}>
+          Cancel
+        </span>
 
         <button className="confirm-btn card-btn">
           Confirm Sell
