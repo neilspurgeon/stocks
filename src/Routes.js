@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Portfolio from 'containers/portfolio/Portfolio.js';
 
 const Routes = () => (
@@ -8,7 +8,7 @@ const Routes = () => (
     <Route exact path='/portfolio' component={Portfolio} />
     <Route exact path='/search' component={Portfolio} />
   </Switch>
-)
+);
 
 
 export default Routes;
