@@ -27,22 +27,26 @@
   }
 }
 
-.card-header {
+.cardHeader {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
 }
 
+.cardTitle {
+  font-weight: 100;
+}
+
 .price {
   font-size: 20px;
 }
 
-.data-container {
+.dataContainer {
   padding: 20px 0;
 }
 
-.data-row {
+.dataRow {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -50,17 +54,16 @@
   margin: 0 -5px;
 }
 
-.data-row:nth-child(2n) {
+.dataRow:nth-child(2n) {
   background: rgba(255, 255, 255, .02);
 }
 
-.card-modal {
+.cardModal {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 999;
   background-color: #1A1A21;
   text-align: center;
   display: flex;
@@ -70,11 +73,11 @@
   transition: .2s ease all;
 }
 
-.card-modal.is-open {
+.cardModal.isOpen {
   transform: translateY(0);
 }
 
-.bottom-actions {
+.bottomActions {
   display: flex;
   flex-direction: row;
   position: absolute;
@@ -83,13 +86,18 @@
   bottom: 0
 }
 
-.card-btn {
+.cancelBtn {
+  color: #C62828;
+}
+
+.cardBtn {
   /*position: absolute;*/
   width: 100%;
   height: 50px;
   background: none;
   border: none;
   font-size: 14px;
+  letter-spacing: .2em;
   text-transform: uppercase;
   color: #FFF;
   left: 0;
@@ -97,19 +105,24 @@
   cursor: pointer;
   border-top: 1px solid rgba(255, 255 ,255, .2);
   border-radius: 0;
+  transition: .2s ease all;
 }
 
-.buy-btn,
-.sell-btn {
+.cardBtn:hover {
+  background: #0091EA;
+}
+
+.buyBtn,
+.sellBtn {
   border-right: 1px solid rgba(255, 255, 255, .2);
 }
 
-.sell-btn {
+.sellBtn {
   left: auto;
   right: 0;
 }
 
-.transaction-input {
+.transactionInput {
   background: none;
   width: 33%;
   text-align: center;
@@ -122,7 +135,7 @@
   padding: 10px 0;
 }
 
-.card-error {
+.cardError {
   position: absolute;
   top: 0;
   padding: 15px;

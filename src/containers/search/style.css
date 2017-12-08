@@ -1,24 +1,24 @@
-.stock-container {
+.stockContainer {
   display: flex;
   flex-wrap: wrap;
   padding: 40px;
   justify-content: space-between;
 }
 
-.search-container {
+.searchContainer {
   text-align: center;
   padding: 0 40px;
 }
 
-.results-container {
+.resultsContainer {
   padding: 0 40px;
 }
 
-.results-container.is-hidden {
+.resultsContainer.isHidden {
   display: none;
 }
 
-.search-input {
+.searchInput {
   font-size: 42px;
   font-weight: 200;
   background: none;
@@ -32,7 +32,7 @@
   max-width: 500px;
 }
 
-.section-header {
+.sectionHeader {
   width: 100%;
   padding: 10px 0;
 }

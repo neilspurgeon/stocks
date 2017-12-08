@@ -10,17 +10,27 @@
   border-bottom: 1px solid rgba(255, 255, 255, .2);
 }
 
-.nav-link {
+.navLink {
   color: #FFF;
   margin-right: 2em;
   text-decoration: none;
   padding-bottom: .5em;
 }
 
-.nav-link.is-active {
-  border-bottom: 3px solid #FFF;
+.navLink.isActive {
+  border-bottom: 3px solid #009688;
 }
 
 .balance {
   font-size: 20px;
+}
+
+.editFundsBtn {
+  border: none;
+  border-radius: 0;
+  background: #0091EA;
+  color: #FFF;
+  font-size: 14px;
+  padding: .75em;
+  margin-left: 1em;
 }

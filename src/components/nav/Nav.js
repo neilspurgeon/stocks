@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Modal from 'react-modal';
-import './Nav.css';
+import style from './style.css';
 
 const customStyles = {
   overlay : {
@@ -58,29 +58,29 @@ class Nav extends React.Component {
 
   render() {
     return (
-      <div className='navbar'>
+      <div className={style.navbar}>
 
         <nav>
           <NavLink
             exact to="/"
-            className='nav-link'
-            activeClassName='is-active'
+            className={style.navLink}
+            activeClassName={style.isActive}
             >
             Portfolio
           </NavLink>
 
           <NavLink
             exact to="/search"
-            className='nav-link'
-            activeClassName='is-active'
+            className={style.navLink}
+            activeClassName={style.isActive}
             >
             Find & Purchase
           </NavLink>
         </nav>
 
-        <div className="balance">
+        <div className={style.balance}>
           ${this.props.balance && this.props.balance.toFixed(2)}
-          <button onClick={this.openModal}>Add/Remove Funds</button>
+          <button className={style.editFundsBtn} onClick={this.openModal}>Add/Remove</button>
         </div>
 
         <Modal

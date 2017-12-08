@@ -1,5 +1,5 @@
 import React from 'react';
-import './Card.css';
+import style from './style.css';
 
 class Card extends React.Component {
   constructor(props) {
@@ -54,41 +54,41 @@ class Card extends React.Component {
 
   render() {
     return (
-      <div className="card">
+      <div className={style.card}>
 
-        <div className="card-header">
-          <h2 className="card-title">{this.props.symbol}</h2>
-          <span className="price">{this.props.latestPrice}</span>
+        <div className={style.cardHeader}>
+          <h2 className={style.cardTitle}>{this.props.symbol}</h2>
+          <span className={style.price}>{this.props.latestPrice}</span>
         </div>
 
-        <div className="data-container">
+        <div className={style.dataContainer}>
 
-          <div className="data-row">
-            <span className="data-label">Open</span>
-            <span className="data-value">{this.props.open}</span>
+          <div className={style.dataRow}>
+            <span className={style.dataLabel}>Open</span>
+            <span className={style.dataValue}>{this.props.open}</span>
           </div>
 
-          <div className="data-row">
-            <span className="data-label">Low</span>
-            <span className="data-value">{this.props.low}</span>
+          <div className={style.dataRow}>
+            <span className={style.dataLabel}>Low</span>
+            <span className={style.dataValue}>{this.props.low}</span>
           </div>
 
-          <div className="data-row">
-            <span className="data-label">High</span>
-            <span className="data-value">{this.props.high}</span>
+          <div className={style.dataRow}>
+            <span className={style.dataLabel}>High</span>
+            <span className={style.dataValue}>{this.props.high}</span>
           </div>
 
-          <div className="data-row">
-            <span className="data-label">Shares</span>
-            <span className="data-value">{this.props.shares}</span>
+          <div className={style.dataRow}>
+            <span className={style.dataLabel}>Shares</span>
+            <span className={style.dataValue}>{this.props.shares}</span>
           </div>
 
         </div>
 
-        <div className="bottom-actions">
+        <div className={style.bottomActions}>
 
           <button
-            className="buy-btn card-btn"
+            className={[style.buyBtn, style.cardBtn].join(' ')}
             onClick={this.handleOpenBuyModal}
           >
             BUY
@@ -96,7 +96,7 @@ class Card extends React.Component {
 
           {this.props.isSellable &&
             <button
-              className="sell-btn card-btn"
+              className={[style.sellBtn, style.cardBtn].join(' ')}
               onClick={this.handleOpenSellModal}
             >
               SELL
@@ -105,28 +105,28 @@ class Card extends React.Component {
 
         </div>
 
-        <div className={["buy-modal", "card-modal", (this.state.buyModalIsOpen ? "is-open" : null)].join(' ')}>
+        <div className={[style.buyModal, style.cardModal, (this.state.buyModalIsOpen ? style.isOpen : null)].join(' ')}>
 
-          <div className="card-error">{ this.state.error }</div>
+          <div className={style.cardError}>{ this.state.error }</div>
 
           How much would you like to purchase?
 
           <input
-            className="transaction-input"
+            className={style.transactionInput}
             type="number"
             value={this.state.transactionAmount}
             onChange={this.handleTransactionAmount}
           />
 
           <span
-            className="cancel-btn"
+            className={style.cancelBtn}
             onClick={this.handleCloseBuyModal}>
             Cancel
           </span>
 
-          <div className="bottom-actions">
+          <div className={style.bottomActions}>
             <button
-              className="confirm-btn card-btn"
+              className={[style.confirmBtn, style.cardBtn].join(' ')}
               onClick={() => this.props.handlePurchase(
                 this.props.symbol,
                 this.props.latestPrice,
@@ -142,27 +142,27 @@ class Card extends React.Component {
 
         </div>
 
-        <div className={["sell-modal", "card-modal", (this.state.sellModalIsOpen ? "is-open" : null)].join(' ')}>
+        <div className={[style.sellModal, style.cardModal, (this.state.sellModalIsOpen ? style.isOpen : null)].join(' ')}>
 
-          <div className="card-error">{ this.state.error }</div>
+          <div className={style.cardError}>{ this.state.error }</div>
 
           How much would you like to sell?
 
           <input
-            className="transaction-input"
+            className={style.transactionInput}
             type="number"
             value={this.state.transactionAmount}
             onChange={this.handleTransactionAmount}
           />
 
-        <span
-          className="cancel-btn"
-          onClick={this.handleCloseSellModal}>
-          Cancel
-        </span>
+          <span
+            className={style.cancelBtn}
+            onClick={this.handleCloseBuyModal}>
+            Cancel
+          </span>
 
-        <div className="bottom-actions">
-          <button className="confirm-btn card-btn"
+        <div className={style.bottomActions}>
+          <button className={[style.confirmBtn, style.cardBtn].join(' ')}
             onClick={() => this.props.handleSell(
               this.props.symbol,
               this.props.latestPrice,

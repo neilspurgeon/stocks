@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from 'components/nav/Nav.js';
 import Card from 'components/card/Card.js';
-import './Portfolio.css';
+import style from './style.css';
 
 class Portfolio extends React.Component {
 
@@ -176,7 +176,7 @@ class Portfolio extends React.Component {
           handleRemoveFunds={this.removeFunds}
         />
 
-        <div className="stock-container">
+      <div className={style.stockContainer}>
           { this.state.stocks[0] && this.state.stocks[0].data && this.state.stocks.map((stock, i) => {
             return (
               <Card

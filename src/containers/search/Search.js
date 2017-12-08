@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from 'components/nav/Nav.js';
 import Card from 'components/card/Card.js';
-import './Search.css';
+import style from './style.css';
 
 class Search extends React.Component {
 
@@ -137,24 +137,24 @@ class Search extends React.Component {
           handleRemoveFunds={this.removeFunds}
         />
 
-        <div className="search-container">
+      <div className={style.searchContainer}>
 
           <form onSubmit={this.search}>
             <input
-              className="search-input"
+              className={style.searchInput}
               value={this.state.searchInput}
               placeholder="Search by symbol"
               onChange={this.handleSearchInputChange}
             />
           </form>
 
-          { this.state.noResults === true && <div className="not-found">Nothing was found.</div>}
+          { this.state.noResults === true && <div className={style.notFound}>Nothing was found.</div>}
 
       </div>
 
-      <div className={["results-container", this.state.searchResults ? null : "is-hidden"].join(' ')}>
+      <div className={[style.resultsContainer, this.state.searchResults ? null : style.isHidden].join(' ')}>
 
-        <div className="section-header">Search Results</div>
+        <div className={style.sectionHeader}>Search Results</div>
 
         { this.state.searchResults && <Card
           handlePurchase={this.handlePurchase}
@@ -167,9 +167,9 @@ class Search extends React.Component {
 
       </div>
 
-        <div className="stock-container">
+        <div className={style.stockContainer}>
 
-          <div className="section-header">Most Active Stocks</div>
+          <div className={style.sectionHeader}>Most Active Stocks</div>
 
           { this.state.stocks[0] && this.state.stocks.map((stock, i) => {
             return (
