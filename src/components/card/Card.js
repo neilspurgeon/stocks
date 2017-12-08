@@ -94,14 +94,14 @@ class Card extends React.Component {
             BUY
           </button>
 
-          {this.props.isSellable ?
+          {this.props.isSellable &&
             <button
               className="sell-btn card-btn"
               onClick={this.handleOpenSellModal}
             >
               SELL
             </button>
-          : null}
+          }
 
         </div>
 
@@ -124,19 +124,21 @@ class Card extends React.Component {
             Cancel
           </span>
 
-          <button
-            className="confirm-btn card-btn"
-            onClick={() => this.props.handlePurchase(
-              this.props.symbol,
-              this.props.latestPrice,
-              parseInt(this.state.transactionAmount, 10),
-              this.props.index,
-              this.handleCloseBuyModal,
-              this.handleError
-            )}
-          >
-            Confirm Purchase
-          </button>
+          <div className="bottom-actions">
+            <button
+              className="confirm-btn card-btn"
+              onClick={() => this.props.handlePurchase(
+                this.props.symbol,
+                this.props.latestPrice,
+                parseInt(this.state.transactionAmount, 10),
+                this.props.index,
+                this.handleCloseBuyModal,
+                this.handleError
+              )}
+            >
+              Confirm Purchase
+            </button>
+          </div>
 
         </div>
 
@@ -159,18 +161,20 @@ class Card extends React.Component {
           Cancel
         </span>
 
-        <button className="confirm-btn card-btn"
-          onClick={() => this.props.handleSell(
-            this.props.symbol,
-            this.props.latestPrice,
-            parseInt(this.state.transactionAmount, 10),
-            this.props.index,
-            this.handleCloseSellModal,
-            this.handleError
-          )}
-        >
-          Confirm Sell
-        </button>
+        <div className="bottom-actions">
+          <button className="confirm-btn card-btn"
+            onClick={() => this.props.handleSell(
+              this.props.symbol,
+              this.props.latestPrice,
+              parseInt(this.state.transactionAmount, 10),
+              this.props.index,
+              this.handleCloseSellModal,
+              this.handleError
+            )}
+          >
+            Confirm Sell
+          </button>
+        </div>
 
         </div>
 

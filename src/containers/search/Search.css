@@ -1,0 +1,38 @@
+.stock-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 40px;
+  justify-content: space-between;
+}
+
+.search-container {
+  text-align: center;
+  padding: 0 40px;
+}
+
+.results-container {
+  padding: 0 40px;
+}
+
+.results-container.is-hidden {
+  display: none;
+}
+
+.search-input {
+  font-size: 42px;
+  font-weight: 200;
+  background: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(255,255,255,1);
+  margin: 130px 0 110px;
+  color: #FFF;
+  outline: none;
+  width: 100%;
+  max-width: 500px;
+}
+
+.section-header {
+  width: 100%;
+  padding: 10px 0;
+}

@@ -29,13 +29,16 @@ exports.purchaseStock = (req, res) => {
   });
 
   // add purchased stocks
-  if (!stockIndex) {
+  if (stockIndex < 0) {
+
     // if new stock, push to array
     stocks.push({
       "symbol": stock,
       "shares": shares
     });
+
   } else {
+    // update if stock already exists
     stocks[stockIndex].shares += shares;
   }
 

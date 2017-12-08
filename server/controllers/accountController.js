@@ -9,7 +9,7 @@ exports.addFunds = (req, res) => {
   const amount = req.body.amount;
   account.balance += amount;
 
-  res.json('Funds successfully added.');
+  res.status(200).json({"balance" : account.balance});
 };
 
 
@@ -17,5 +17,5 @@ exports.removeFunds = (req, res) => {
   const amount = req.body.amount;
   account.balance -= amount;
 
-  res.json('Funds successfully removed');
+  res.status(200).json({"balance" : account.balance});
 };

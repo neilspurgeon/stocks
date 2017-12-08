@@ -1,53 +1,30 @@
 import React from 'react';
 import Nav from 'components/nav/Nav.js';
 import Card from 'components/card/Card.js';
-import './Portfolio.css';
+import './Search.css';
 
-class Portfolio extends React.Component {
+class Search extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      stocks: []
+      stocks: [],
+      searchInput: null,
+      searchResults: null
     };
   }
 
   componentDidMount() {
-    fetch('/stocks')
-      .then((res) => res.json())
-      .then((stocksArr) => this.getStockQuotes(stocksArr));
-
     fetch('/account')
       .then((res) => res.json())
       .then((data) => {
         this.setState({ balance: data.balance });
       });
-  }
 
-
-  getStockQuotes(stockObjArr) {
-
-    // create new arr of just the symbol names
-    const symbolsArr = [];
-    stockObjArr.forEach((obj) => {
-      return symbolsArr.push(obj.symbol);
-    });
-
-    // create request string
-    symbolsArr.join(',');
-    const requestUrl = 'https://api.iextrading.com/1.0/stock/market/batch?symbols=' + symbolsArr + '&types=quote';
-
-    fetch(requestUrl)
+    fetch('https://api.iextrading.com/1.0/stock/market/list/mostactive')
       .then((res) => res.json())
-      .then((parsedData) => {
-
-        // loop through quote obj and add quote to stocks arr (parsedData)
-        Object.keys(parsedData).forEach((key, i) => {
-          return stockObjArr[i].data = parsedData[key];
-        });
-
-        return this.setState({ stocks: stockObjArr });
-
+      .then((data) => {
+        this.setState({ stocks: data });
       });
   }
 
@@ -118,52 +95,36 @@ class Portfolio extends React.Component {
 
     // if successful update ui
     .then((parsedData) => {
-
-      let stockObj = this.state.stocks;
-      stockObj[index].shares = stockObj[index].shares += shares;
-
-      this.setState({
-        stocks: stockObj,
-        balance: parsedData.balance
-      });
+      this.setState({ balance: parsedData.balance });
       cb();
     });
   }
 
-  handleSell = (symbol, cost, shares, index, cb, errCb) => {
 
-    if (shares > this.state.stocks[index].shares) {
-      return errCb('You do not have enough shares');
-    }
-
-    fetch('/stocks/sell', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        symbol: symbol,
-        costPerShare: cost,
-        shares: shares
-      })
-    })
-    .then((res) => res.json())
-
-    // need to add catch for errors
-
-    // if successful update ui
-    .then((parsedData) => {
-
-      let stockObj = this.state.stocks;
-      stockObj[index].shares = stockObj[index].shares -= shares;
-
-      this.setState({
-        stocks: stockObj,
-        balance: parsedData.balance
-      });
-      cb();
+  handleSearchInputChange = (e) => {
+    this.setState({
+      searchInput: e.target.value
     });
+  }
+
+
+  search = (e) => {
+    const searchText = this.state.searchInput;
+    e.preventDefault();
+    fetch('https://api.iextrading.com/1.0/stock/' + searchText + '/quote')
+      .then((res) => {
+        if(res.ok) {
+          return res.json();
+        }
+        throw this.setState({
+          searchResults: null,
+          noResults: true
+        });
+      })
+      .then((result) => this.setState({
+        searchResults: result,
+        noResults: false
+      }));
   }
 
 
@@ -176,21 +137,51 @@ class Portfolio extends React.Component {
           handleRemoveFunds={this.removeFunds}
         />
 
+        <div className="search-container">
+
+          <form onSubmit={this.search}>
+            <input
+              className="search-input"
+              value={this.state.searchInput}
+              placeholder="Search by symbol"
+              onChange={this.handleSearchInputChange}
+            />
+          </form>
+
+          { this.state.noResults === true && <div className="not-found">Nothing was found.</div>}
+
+      </div>
+
+      <div className={["results-container", this.state.searchResults ? null : "is-hidden"].join(' ')}>
+
+        <div className="section-header">Search Results</div>
+
+        { this.state.searchResults && <Card
+          handlePurchase={this.handlePurchase}
+          symbol={this.state.searchResults.symbol}
+          latestPrice={this.state.searchResults.latestPrice}
+          open={this.state.searchResults.open}
+          low={this.state.searchResults.low}
+          high={this.state.searchResults.high}
+        />}
+
+      </div>
+
         <div className="stock-container">
-          { this.state.stocks[0] && this.state.stocks[0].data && this.state.stocks.map((stock, i) => {
+
+          <div className="section-header">Most Active Stocks</div>
+
+          { this.state.stocks[0] && this.state.stocks.map((stock, i) => {
             return (
               <Card
-                isSellable
                 key={i}
                 index={i}
                 handlePurchase={this.handlePurchase}
-                handleSell={this.handleSell}
                 symbol={stock.symbol}
-                latestPrice={stock.data.quote.latestPrice}
-                open={stock.data.quote.open}
-                low={stock.data.quote.low}
-                high={stock.data.quote.high}
-                shares={stock.shares}
+                latestPrice={stock.latestPrice}
+                open={stock.open}
+                low={stock.low}
+                high={stock.high}
               />
             );
           })}
@@ -201,4 +192,4 @@ class Portfolio extends React.Component {
   }
 }
 
-export default Portfolio;
+export default Search;
