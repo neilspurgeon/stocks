@@ -7,7 +7,7 @@ __Steps__
 
 
 ### Check out the live version
-[https://dry-thicket-52260.herokuapp.com/]()
+[https://dry-thicket-52260.herokuapp.com/](https://dry-thicket-52260.herokuapp.com/)
 
 
 ## Process
