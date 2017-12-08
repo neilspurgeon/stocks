@@ -157,7 +157,7 @@ class Card extends React.Component {
 
           <span
             className={style.cancelBtn}
-            onClick={this.handleCloseBuyModal}>
+            onClick={this.handleCloseSellModal}>
             Cancel
           </span>
 
