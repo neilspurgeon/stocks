@@ -19,19 +19,27 @@ exports.purchaseStock = (req, res) => {
   }
 
   // deduct purchase from account
-  account.balance -= totalCost;
+  const newBalance = (account.balance - totalCost);
+  account.balance = newBalance;
 
   // check to see if stock already exists
-  if (stocks[stock]) {
-    shares = stocks[stock].shares += shares;
-  }
+  // and if so find stock index in stock db array
+  const stockIndex = stocks.findIndex((obj) => {
+    return obj.symbol === stock;
+  });
 
   // add purchased stocks
-  stocks[stock] = {
-    "shares": shares
-  };
+  if (!stockIndex) {
+    // if new stock, push to array
+    stocks.push({
+      "symbol": stock,
+      "shares": shares
+    });
+  } else {
+    stocks[stockIndex].shares += shares;
+  }
 
-  res.send(shares + ' of ' + stock + ' purchased for $' + totalCost);
+  res.status(200).json({"balance": account.balance});
 };
 
 
@@ -41,24 +49,26 @@ exports.sellStock = (req, res) => {
   const value = req.body.costPerShare;
   const totalValue = value * shares;
 
+  const stockIndex = stocks.findIndex((obj) => {
+    return obj.symbol === stock;
+  });
+
   // check to make sure you own this stock
-  if (!stocks[stock]) {
+  if (!stocks[stockIndex] || stocks[stockIndex].shares === 0) {
     return res.status(400).send('You do not own any ' + stock + ' shares.');
   }
 
   // check to make sure you have enough stock to sellStock
-  if (stocks[stock].shares < shares) {
+  if (stocks[stockIndex].shares < shares) {
     return res.status(400).send('You do not own enough shares.');
   }
 
   // deduct shares from stocks
-  stocks[stock] = {
-    "shares": stocks[stock].shares -= shares
-  };
+  stocks[stockIndex].shares = stocks[stockIndex].shares -= shares;
 
   // add funds to account
   account.balance += totalValue;
 
-  res.send(shares + ' of ' + stock + ' sold for $' + totalValue);
+  res.status(200).json({"balance": account.balance});
 
 };

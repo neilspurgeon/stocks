@@ -113,3 +113,11 @@
   font-size: 30px;
   padding: 10px 0;
 }
+
+.card-error {
+  position: absolute;
+  top: 0;
+  padding: 15px;
+  width: 100%;
+  font-size: 13px;
+}

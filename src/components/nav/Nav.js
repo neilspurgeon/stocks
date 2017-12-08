@@ -26,7 +26,7 @@ const Nav = (props) => {
       </nav>
 
       <div className="balance">
-        {props.accountBalance}
+        ${props.balance && props.balance.toFixed(2)}
       </div>
 
     </div>

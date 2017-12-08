@@ -5,31 +5,12 @@ class Card extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      latestPrice: null,
       buyModalIsOpen: false,
       sellModalIsOpen: false,
-      transationAmount: 100
+      transactionAmount: 100
     };
   }
 
-  // Get the lastet stock Data
-  // this should later be combined into single request and passed down through props
-  componentDidMount() {
-    fetch('https://api.iextrading.com/1.0/stock/' + this.props.symbol + '/quote')
-      .then((res) => {
-        return res.json();
-      })
-      .then((parsedData) => {
-        this.setState({
-          latestPrice: parsedData.latestPrice,
-          change: parsedData.change,
-          open: parsedData.open,
-          low: parsedData.low,
-          high: parsedData.high,
-          close: parsedData.close
-        });
-      });
-  }
 
   // Handle open/close modals
 
@@ -42,7 +23,8 @@ class Card extends React.Component {
 
   handleCloseBuyModal = () => {
     this.setState({
-      buyModalIsOpen: false
+      buyModalIsOpen: false,
+      error: null
     });
   }
 
@@ -55,13 +37,18 @@ class Card extends React.Component {
 
   handleCloseSellModal = () => {
     this.setState({
-      sellModalIsOpen: false
+      sellModalIsOpen: false,
+      error: null
     });
+  }
+
+  handleError = (message) => {
+    this.setState({ error: message });
   }
 
   handleTransactionAmount = (e) => {
     this.setState({
-      transationAmount: e.target.value
+      transactionAmount: e.target.value
     });
   }
 
@@ -71,24 +58,24 @@ class Card extends React.Component {
 
         <div className="card-header">
           <h2 className="card-title">{this.props.symbol}</h2>
-          <span className="price">{this.state.latestPrice}</span>
+          <span className="price">{this.props.latestPrice}</span>
         </div>
 
         <div className="data-container">
 
           <div className="data-row">
             <span className="data-label">Open</span>
-            <span className="data-value">{this.state.open}</span>
+            <span className="data-value">{this.props.open}</span>
           </div>
 
           <div className="data-row">
             <span className="data-label">Low</span>
-            <span className="data-value">{this.state.low}</span>
+            <span className="data-value">{this.props.low}</span>
           </div>
 
           <div className="data-row">
             <span className="data-label">High</span>
-            <span className="data-value">{this.state.high}</span>
+            <span className="data-value">{this.props.high}</span>
           </div>
 
           <div className="data-row">
@@ -120,12 +107,14 @@ class Card extends React.Component {
 
         <div className={["buy-modal", "card-modal", (this.state.buyModalIsOpen ? "is-open" : null)].join(' ')}>
 
+          <div className="card-error">{ this.state.error }</div>
+
           How much would you like to purchase?
 
           <input
             className="transaction-input"
             type="number"
-            value={this.state.transationAmount}
+            value={this.state.transactionAmount}
             onChange={this.handleTransactionAmount}
           />
 
@@ -135,7 +124,17 @@ class Card extends React.Component {
             Cancel
           </span>
 
-          <button className="confirm-btn card-btn">
+          <button
+            className="confirm-btn card-btn"
+            onClick={() => this.props.handlePurchase(
+              this.props.symbol,
+              this.props.latestPrice,
+              parseInt(this.state.transactionAmount, 10),
+              this.props.index,
+              this.handleCloseBuyModal,
+              this.handleError
+            )}
+          >
             Confirm Purchase
           </button>
 
@@ -143,12 +142,14 @@ class Card extends React.Component {
 
         <div className={["sell-modal", "card-modal", (this.state.sellModalIsOpen ? "is-open" : null)].join(' ')}>
 
+          <div className="card-error">{ this.state.error }</div>
+
           How much would you like to sell?
 
           <input
             className="transaction-input"
             type="number"
-            value={this.state.transationAmount}
+            value={this.state.transactionAmount}
             onChange={this.handleTransactionAmount}
           />
 
@@ -158,7 +159,16 @@ class Card extends React.Component {
           Cancel
         </span>
 
-        <button className="confirm-btn card-btn">
+        <button className="confirm-btn card-btn"
+          onClick={() => this.props.handleSell(
+            this.props.symbol,
+            this.props.latestPrice,
+            parseInt(this.state.transactionAmount, 10),
+            this.props.index,
+            this.handleCloseSellModal,
+            this.handleError
+          )}
+        >
           Confirm Sell
         </button>
 
