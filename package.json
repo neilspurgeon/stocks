@@ -51,12 +51,14 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node server/index.js",
-    "postInstall": "npm run build",
-    "startDev": "concurrently --kill-others \"npm run startServer\" \"node scripts/start.js\"",
-    "startServer": "node server/index.js",
+    "scripts": {
+    "start": "npm run start:server",
+    "postinstall": "npm run build",
+    "start:devServer": "node scripts/start.js",
+    "start:server": "node server/index.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
+  },
   },
   "proxy": "http://localhost:9000/",
   "jest": {
