@@ -51,10 +51,10 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "npm run start:server",
+    "start": "npm run startServer",
     "postinstall": "npm run build",
-    "start:devServer": "node scripts/start.js",
-    "start:server": "node server/index.js",
+    "startDev": "concurrently --kill-others \"node scripts/start.js\" \"node server/index.js\"",
+    "startServer": "node server/index.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
